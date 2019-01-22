@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import GroupCell from './GroupCell';
 
 class Groups extends Component {
     render() {
         return (
-            <div>
-                <p>Content of Tab Pane 2</p>
-                <p>Content of Tab Pane 2</p>
-                <p>Content of Tab Pane 2</p>
-            </div>
+            <ul className='list'>
+                <li>
+                    <GroupCell />
+                </li>
+                <li>
+                    <GroupCell />
+                </li>
+            </ul>
         );
     }
 }

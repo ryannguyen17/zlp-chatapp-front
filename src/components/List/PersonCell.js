@@ -4,6 +4,7 @@ import { Avatar, Icon } from 'antd';
 class PersonCell extends Component {
     render() {
         let cellStyle = this.props.online ? 'cell' : 'cell offline';
+
         return (
             <div className={cellStyle}>
                 <Avatar size={48} icon="user" />

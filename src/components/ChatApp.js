@@ -3,6 +3,8 @@ import { Tabs, Avatar, Icon } from 'antd';
 
 import Persons from './List/Persons';
 import Groups from './List/Groups';
+import PersonInfo from './ChatInfo/PersonInfo';
+import ChatArea from './ChatArea';
 
 const TabPane = Tabs.TabPane;
 
@@ -13,7 +15,7 @@ class ChatApp extends Component {
                 <div className='app-sider'>
                     <div className='sider-menu'>
                         <span>
-                            <Avatar size={64} icon="user" />
+                            <Avatar size={64} icon="user" style={{backgroundColor: '#87d068'}}/>
                         </span>
                         <span>
                             <Icon type="usergroup-add" style={{fontSize: '36px'}} />
@@ -37,15 +39,11 @@ class ChatApp extends Component {
                     </div>
                 </div>
                 <div className='app-main'>
-                    <div className='main-top'>
-                    
-                    </div>
+                    <PersonInfo />
                     <div className='main-content'>
 
                     </div>
-                    <div className='main-bottom'>
-                    
-                    </div>
+                    <ChatArea />
                 </div>
                 <div className='clearfix'></div>
             </div>
