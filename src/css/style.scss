@@ -1,0 +1,162 @@
+@import 'font';
+@import 'reset';
+
+.clearfix {
+    clear: both;
+}
+
+.login-container {
+    background-image: url(../img/background.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+
+    .login-area {
+        width: 448px;
+
+        .logo-text img {
+            display: block;
+            margin: 0 auto 10px;
+            height: 180px;
+        }
+
+        .login-main {
+            padding: 20px 50px;
+            border-radius: 10px;
+            background-color: white;
+
+            h2.form-title {
+                text-align: center;
+                font-weight: bold;
+                color: rgb(175, 175, 175);
+            }
+
+            form > div {
+                margin: 10px auto;
+            }
+
+            form button {
+                width: 30%;
+                font-weight: bold;
+                color: white;
+            }
+
+            form button > span {
+                color: white;
+            }
+
+            .login-tips {
+                font-style: italic;
+                float: right;
+                color: rgb(150, 150, 150);
+            }
+        }
+    }
+}
+
+.chat-app {
+    background-image: url(../img/white-background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    height: 100vh;
+    display: flex;
+
+    .app-sider {
+        height: 100%;
+        max-width: 448px;
+        min-width: 448px;
+
+        .sider-menu {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: blue;
+            max-width: 96px;
+            min-width: 96px;
+            float: left;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .sider-menu > span {
+            margin-bottom: 24px;
+        }
+
+        .sider-list {
+            height: 100%;
+            max-width: 352px;
+            min-width: 352px;
+            float: left;
+
+            ul.list-persons {
+                list-style: none;
+                padding: 0;
+
+                .cell {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 10px;
+                    cursor: pointer;
+
+                    .info {
+                        margin: 0 10px;
+                        max-width: 200px;
+
+                        .display-name {
+                            display: block;
+                            font-weight: bold;
+                        }
+
+                        .lastest-msg {
+                            display: block;
+                            width: 100%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+
+                    .status {
+                        margin-left: auto;
+                    }
+                }
+
+                .offline {
+                    opacity: 0.5;
+                }
+
+                .cell:hover {
+                    background-color: rgba(128, 128, 128, 0.1);
+                }
+            }
+        }
+    }
+
+    .app-main {
+        height: 100%;
+        border: 2px solid red;
+        width: 100%;
+
+        .main-top {
+            height: 80px;
+            border: 2px solid blue;
+        }
+
+        .main-content {
+            height: calc(100vh - 185px);
+            border: 2px solid black;
+        }
+
+        .main-bottom {
+            height: 100px;
+
+            border: 2px solid grey;
+        }
+    }
+}
