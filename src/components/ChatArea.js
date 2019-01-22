@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
+import { Avatar, Icon } from 'antd';
 
 class ChatArea extends Component {
     render() {
         return(
             <div className='main-bottom'>
-                <form>
-                    <textarea rows={2}>
-
-                    </textarea>
-                </form>
             </div>
         );
     }
