@@ -181,7 +181,7 @@
             flex-direction: column;
 
             .msg {
-                margin-bottom: 20px;
+                margin-bottom: 16px;
                 max-width: 60%;
 
                 .msg-user,
@@ -273,6 +273,10 @@
                 form button:hover {
                     cursor: pointer;
                     background-color: rgba(0, 0, 255, 0.1);
+                }
+
+                form button:active {
+                    color: grey;
                 }
             }
 
