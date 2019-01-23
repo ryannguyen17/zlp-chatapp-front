@@ -15,16 +15,16 @@ class ChatApp extends Component {
             <div className='chat-app'>
                 <div className='app-sider'>
                     <div className='sider-menu'>
-                        <span>
+                        <span className='menu-item menu-item-user'>
                             <Avatar size={64} icon="user" style={{backgroundColor: '#87d068'}}/>
                         </span>
-                        <span>
+                        <span className='menu-item'>
                             <Icon type="usergroup-add" style={{fontSize: '36px'}} />
                         </span>
-                        <span>
+                        <span className='menu-item'>
                             <Icon type="info" style={{fontSize: '36px'}} />
                         </span>
-                        <span>
+                        <span className='menu-item logout'>
                             <Icon type="logout" style={{fontSize: '36px'}} />
                         </span>
                     </div>
