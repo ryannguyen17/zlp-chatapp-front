@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Avatar, Icon } from 'antd';
+import { Avatar } from 'antd';
 
 class GroupCell extends Component {
     render() {

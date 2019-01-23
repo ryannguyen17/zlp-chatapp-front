@@ -15,9 +15,6 @@ class PersonInfo extends Component {
                         Đang hoạt động
                     </span>
                 </div>
-                <div className='more-actions'>
-                    <Icon type="setting" theme="filled"  style={{fontSize: '1.5em'}}/>
-                </div>
             </div>
         );
     }
@@ -25,5 +22,5 @@ class PersonInfo extends Component {
 
 export default PersonInfo;
 
-{/* <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" style={{fontSize: '1.2em'}} /> : 
-                        <Icon type="minus-circle" theme="twoTone" twoToneColor="#887a88" style={{fontSize: '1.2em'}} /> */}
+// {/* <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" style={{fontSize: '1.2em'}} /> : 
+//                        <Icon type="minus-circle" theme="twoTone" twoToneColor="#887a88" style={{fontSize: '1.2em'}} /> */}

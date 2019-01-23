@@ -3,7 +3,8 @@ import { Tabs, Avatar, Icon } from 'antd';
 
 import Persons from './List/Persons';
 import Groups from './List/Groups';
-import PersonInfo from './ChatInfo/PersonInfo';
+import ChatInfo from './ChatInfo';
+import ChatHistory from './ChatHistory';
 import ChatArea from './ChatArea';
 
 const TabPane = Tabs.TabPane;
@@ -39,10 +40,8 @@ class ChatApp extends Component {
                     </div>
                 </div>
                 <div className='app-main'>
-                    <PersonInfo />
-                    <div className='main-content'>
-
-                    </div>
+                    <ChatInfo />
+                    <ChatHistory />
                     <ChatArea />
                 </div>
                 <div className='clearfix'></div>
