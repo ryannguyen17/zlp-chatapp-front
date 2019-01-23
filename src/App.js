@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
-import 'antd/dist/antd.css';
-import './css/style.scss';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -10,9 +8,13 @@ import ChatApp from './components/ChatApp';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <ChatApp />
-      </div>
+        <Router>
+            <div className="App">
+                <Route path='/' exact component={ChatApp} />
+                <Route path='/login' component={Login} />
+                <Route path='/signup' component={Signup} />
+            </div>
+        </Router>
     );
   }
 }
