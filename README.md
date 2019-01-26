@@ -31,3 +31,11 @@
     - Thiết kế global state (nếu có dùng Redux)
     - Implement các xử lý trên Frontend.
 
+
+---
+
+#### Lịch sử
+
+- [x] Tạo branch `thoai`
+- [x] Cấu trúc lại component
+
