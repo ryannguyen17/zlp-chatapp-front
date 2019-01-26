@@ -7,8 +7,8 @@ class GroupCell extends Component {
             <div className='cell'>
                 <Avatar size={48} icon="team" />
                 <div className='info'>
-                    <span className='display-name'>Hội Cô Đơn</span>
-                    <span className='lastest-msg'>ashdjasdasdasdasdasdasdasdasdasdasdasd</span>
+                    <span className='display-name'>{this.props.groupName}</span>
+                    <span className='lastest-msg'>{this.props.lastestMsg}</span>
                 </div>
             </div>
         );

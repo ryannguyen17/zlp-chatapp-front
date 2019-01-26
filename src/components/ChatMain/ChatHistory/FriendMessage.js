@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 
-class MyMessage extends Component {
+class FriendMessage extends Component {
     render() {
         return (
-            <div className='msg my-msg'>
+            <div className='msg friend-msg'>
                 <div className='msg-user'>
-                    me                
+                    {this.props.sender}                
                 </div>
                 <div className='msg-content'>
-                    how are you?asdsadsadasdsada sd sad sad sa d sad sa sd 
+                    {this.props.content}
                 </div>
                 <div className='msg-time'>
-                    Tues, 2/5/2019
+                    {this.props.time}
                 </div>
             </div>
         );
     }
 }
 
-export default MyMessage;
+export default FriendMessage;

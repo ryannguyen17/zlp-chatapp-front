@@ -9,8 +9,8 @@ class PersonCell extends Component {
             <div className={cellStyle}>
                 <Avatar size={48} icon="user" />
                 <div className='info'>
-                    <span className='display-name'>Nguyen Van Nghia</span>
-                    <span className='lastest-msg'>ashdjasdasdasdasdasdasdasdasdasdasdasd</span>
+                    <span className='display-name'>{this.props.personName}</span>
+                    <span className='lastest-msg'>{this.props.lastestMsg}</span>
                 </div>
                 <div className='status'>
                     {this.props.online ? 
