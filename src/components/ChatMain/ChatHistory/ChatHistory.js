@@ -20,7 +20,7 @@ class ChatHistory extends Component {
     render() {
         
         const isGroup = this.props.isGroup;
-        const groups = this.props.groups;
+        const groups  = this.props.groups;
         const persons = this.props.persons;
         const chatAcc = this.props.chatAcc;
 

@@ -5,7 +5,6 @@ import ChatArea from './ChatArea/ChatArea';
 import { connect } from 'react-redux';
 
 class ChatMain extends Component {
-
     render() {
         return (
             <div className='app-main'

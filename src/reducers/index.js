@@ -36,7 +36,8 @@ const initialState = {
             groupName: "FA Alone",
             lastestMsg: "An gi chua?",
             online: true,
-            messages: []
+            messages: [],
+            members: ["thoainh","nghianv"]
         }
     }
 }
@@ -58,7 +59,6 @@ const rootReducer = (state = initialState, action) => {
                 }
             });
         case MESSAGE:
-            console.log(action);
             const pload = action.payload;
             const msg = {
                 id : Date.now(),
@@ -92,6 +92,33 @@ const rootReducer = (state = initialState, action) => {
                 });
             }
             return obj;
+        case ADDGROUP:
+            const gName = action.payload.groupName;
+            const gMembers = action.payload.members;
+            const gAcc = gName.replace(/\s/g,'').toLowerCase();
+            const objG = Object.assign({},state,{
+                groups: {
+                    ...state.groups,
+                    [gAcc]:{
+                        acc: gAcc,
+                        groupName: gName,
+                        lastestMsg: "",
+                        online: true,
+                        messages: [],
+                        members: gMembers
+                    }
+                }
+            })
+            return objG;
+        case ADDUSER:
+            return Object.assign({},state, {
+                persons: {
+                    ...state.persons,
+                    [action.payload.acc]:{
+                        ...action.payload
+                    }
+                }
+            });
         default:
             return state;
     }

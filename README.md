@@ -44,4 +44,7 @@
 - Thêm redux (còn sơ sài chạy cho được đã, refactor sau)
 - Thêm tin nhắn, chuyển chatView, đổi UserInfo khi click vào friend
 
+##### 28/01/19 22h26
 
+- Thêm tạo group
+- Định nghĩa một số thứ linh tinh, hỗn độn

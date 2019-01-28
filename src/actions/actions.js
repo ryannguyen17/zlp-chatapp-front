@@ -31,11 +31,15 @@ export const changeChatView = (p_acc, p_isGroup, p_chatView, p_online) => {
     }
 }
 
-export const addUser = (p_name) => {
+export const addUser = (p_acc,p_name,p_lastmsg,p_online,p_msg) => {
     return {
         type: ADDUSER,
         payload: {
-            name: p_name
+            acc: p_acc,
+            personName: p_name,
+            lastestMsg: p_lastmsg,
+            online: p_online,
+            messages: p_msg
         }
     }
 }
