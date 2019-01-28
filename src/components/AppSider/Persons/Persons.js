@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
 import PersonCell from './PersonCell';
+import { connect } from 'react-redux';
+import { changeChatView } from '../../../actions/actions';
 
 class Persons extends Component {
     render() {
-        return (
-            <ul className='list'>
-            {  
-                this.props.persons.map(person => (
-                <li key = {person.id}>
-                     <PersonCell online={person.online}
-                        personName={person.personName}
-                        lastestMsg={person.lastestMsg}/>
+        let render = [];
+        const persons = this.props.persons;
+        for (let id in persons) {
+            const online = persons[id].online;
+            const personName = persons[id].personName;
+            const lastestMsg = persons[id].lastestMsg;
+            render.push(
+                <li key={id}>
+                    <PersonCell online={online}
+                        personName={personName}
+                        lastestMsg={lastestMsg}
+                        acc={id}
+                        clickMe={acc => this.props.dispatch(changeChatView(acc, false, personName, online))} />
                 </li>
-            ))}
-            </ul>
+            );
+        }
+        return (
+            <ul className='list'>{render}</ul>
         );
     }
 }
 
-export default Persons;
+const mapStateToProps = (state) => ({
+    persons: state.persons
+});
+
+export default connect(mapStateToProps)(Persons);

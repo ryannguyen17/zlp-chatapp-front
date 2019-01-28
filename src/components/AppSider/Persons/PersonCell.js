@@ -6,7 +6,7 @@ class PersonCell extends Component {
         let cellStyle = this.props.online ? 'cell' : 'cell offline';
 
         return (
-            <div className={cellStyle}>
+            <div className={cellStyle} onClick={() => this.props.clickMe(this.props.acc)}>
                 <Avatar size={48} icon="user" />
                 <div className='info'>
                     <span className='display-name'>{this.props.personName}</span>

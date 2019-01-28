@@ -5,7 +5,10 @@ class PersonInfo extends Component {
     render() {
         return (
             <div className='main-top'>
-                <Avatar size={48} icon="user" style={{marginRight: '15px'}}/>
+                {this.props.isgroup ?
+                    <Avatar size={48} icon="team" style={{marginRight: '15px'}}/>:
+                    <Avatar size={48} icon="user" style={{marginRight: '15px'}}/>}
+                
                 <div className='info'>
                     <span className='info-name'>
                         {this.props.chatView}
