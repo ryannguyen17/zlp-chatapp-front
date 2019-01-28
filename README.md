@@ -39,3 +39,9 @@
 - [x] Tạo branch `thoai`
 - [x] Cấu trúc lại component
 
+##### 28/01/19 11h30
+
+- Thêm redux (còn sơ sài chạy cho được đã, refactor sau)
+- Thêm tin nhắn, chuyển chatView, đổi UserInfo khi click vào friend
+
+
