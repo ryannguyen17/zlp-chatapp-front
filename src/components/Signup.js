@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
+import axios from 'axios';
 
 import textLogo from '../img/icon_text.png';
 
@@ -11,14 +12,28 @@ class Signup extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        notification['success']({
-            message: 'Success',
-            description: 'Đăng ký tài khoản thành công',
-            duration: 2
-        });
         this.props.form.validateFields((err, value) => {
             if(!err) {
                 console.log('Receive values of form: ', value);
+                axios.post('http://127.0.0.1:8000/api/register', {
+                    username: value.username,
+                    display_name: value.display_name,
+                    password: value.password
+                }).then(function(res) {
+                    if(res.data.success === true) {
+                        notification['success']({
+                            message: 'Successs',
+                            description: 'Đăng ký tài khoản thành công',
+                            duration: 1
+                        });
+                    } else {
+                        notification['error']({
+                            message: 'Error',
+                            description: res.data.message,
+                            duration: 1
+                        });
+                    }
+                });
             }
         });
     }
@@ -47,6 +62,10 @@ class Signup extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
+
+        if(localStorage.getItem('username') !== undefined) {
+            return <Redirect to='/' />
+        }
 
         return (
             <div className='login-container'>

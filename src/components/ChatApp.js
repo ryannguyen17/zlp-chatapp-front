@@ -1,5 +1,9 @@
 import React , { Component } from 'react';
 import { Tabs, Avatar, Icon } from 'antd';
+import { withRouter, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { doLogout } from '../actions';
+import _ from 'lodash';
 
 import Persons from './List/Persons';
 import Groups from './List/Groups';
@@ -10,7 +14,18 @@ import ChatArea from './ChatArea';
 const TabPane = Tabs.TabPane;
 
 class ChatApp extends Component {
+    handleLogOut = () => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('display_name');
+        this.props.doLogout();
+        this.props.history.push('/login');
+    }
+
     render() {
+        if(this.props.currentUser.username === undefined) {
+            return <Redirect to='/login' />
+        }
+
         return (
             <div className='chat-app'>
                 <div className='app-sider'>
@@ -25,7 +40,7 @@ class ChatApp extends Component {
                             <Icon type="info" style={{fontSize: '36px'}} />
                         </span>
                         <span className='menu-item logout'>
-                            <Icon type="logout" style={{fontSize: '36px'}} />
+                            <Icon type="logout" style={{fontSize: '36px'}} onClick={this.handleLogOut} />
                         </span>
                     </div>
                     <div className='sider-list'>
@@ -39,15 +54,34 @@ class ChatApp extends Component {
                         </Tabs>
                     </div>
                 </div>
-                <div className='app-main'>
-                    <ChatInfo />
-                    <ChatHistory />
-                    <ChatArea />
-                </div>
+                    { _.isEmpty(this.props.chatWith) ? 
+                            <div className='app-main'></div> 
+                            : 
+                            <div className='app-main'>
+                                <ChatInfo />
+                                <ChatHistory />
+                                <ChatArea />
+                            </div>
+                    }
                 <div className='clearfix'></div>
             </div>
         );
     }
 }
 
-export default ChatApp;
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser,
+        chatWith: state.chatWith
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        doLogout: () => {
+            dispatch(doLogout());
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChatApp));

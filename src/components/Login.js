@@ -1,21 +1,50 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Icon } from 'antd';
-import { Link } from 'react-router-dom';
-
+import { Form, Input, Button, Icon, notification } from 'antd';
+import { Link, withRouter, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import axios from 'axios';
+import { doLogin } from '../actions';
 import textLogo from '../img/icon_text.png';
 
 class Login extends Component {
     handleSubmit = (e) => {
+        const that = this;
+
         e.preventDefault();
         this.props.form.validateFields((err, value) => {
             if(!err) {
                 console.log('Receive values of form: ', value);
+                axios.post('http://127.0.0.1:8000/api/authenticate', {
+                    username: value.username,
+                    password: value.password
+                }).then(function(res) {
+                    console.log(res);
+                    if(res.data.success === false) {
+                        notification['error']({
+                            message: 'Error',
+                            description: 'Đăng nhập thất bại',
+                            duration: 1
+                        });
+                    } else {
+                        localStorage.setItem('username', res.data.user.username);
+                        localStorage.setItem('display_name', res.data.user.display_name);
+                        that.props.doLogin({
+                            username: res.data.user.username,
+                            display_name: res.data.user.display_name
+                        })
+                        that.props.history.push('/');
+                    }
+                });
             }
         });
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
+
+        if(this.props.currentUser.username !== undefined) {
+            return <Redirect to='/' />
+        }
 
         return (
             <div className='login-container'>
@@ -73,4 +102,18 @@ class Login extends Component {
     }
 }
 
-export default Form.create({name: 'login_form'})(Login);
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        doLogin: (user) => {
+            dispatch(doLogin(user));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form.create({name: 'login_form'})(Login)));
