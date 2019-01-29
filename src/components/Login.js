@@ -30,7 +30,7 @@ class Login extends Component {
                         localStorage.setItem('display_name', res.data.user.display_name);
                         that.props.doLogin({
                             username: res.data.user.username,
-                            display_name: res.data.user.display_name
+                            display_name: res.data.user.display_name,
                         })
                         that.props.history.push('/');
                     }

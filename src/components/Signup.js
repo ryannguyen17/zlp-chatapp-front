@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { Form, Input, Button, Icon, notification } from 'antd';
 import axios from 'axios';
@@ -63,7 +64,7 @@ class Signup extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
 
-        if(localStorage.getItem('username') !== undefined) {
+        if(this.props.currentUser.username !== undefined) {
             return <Redirect to='/' />
         }
 
@@ -154,4 +155,10 @@ class Signup extends Component {
     }
 }
 
-export default Form.create({name: 'signup_form'})(Signup);
+const mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps, null)(Form.create({name: 'signup_form'})(Signup));

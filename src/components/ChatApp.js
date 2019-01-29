@@ -2,8 +2,9 @@ import React , { Component } from 'react';
 import { Tabs, Avatar, Icon } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { doLogout } from '../actions';
 import _ from 'lodash';
+import axios from 'axios';
+import { SET_NEW_LIST_PERSON } from '../actions';
 
 import Persons from './List/Persons';
 import Groups from './List/Groups';
@@ -19,6 +20,16 @@ class ChatApp extends Component {
         localStorage.removeItem('display_name');
         this.props.doLogout();
         this.props.history.push('/login');
+    }
+
+    componentDidMount() {
+        const that = this;
+
+        axios.post('http://127.0.0.1:8000/api/get-list', {
+            username: this.props.currentUser.username
+        }).then(function(res) {
+            that.props.setNewListPerson(res.data.persons);
+        });
     }
 
     render() {
@@ -79,7 +90,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         doLogout: () => {
-            dispatch(doLogout());
+            dispatch({type: 'LOGOUT'});
+        },
+        setNewListPerson: (arr) => {
+            dispatch({
+                type: SET_NEW_LIST_PERSON,
+                content: arr
+            });
         }
     }
 }

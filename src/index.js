@@ -4,13 +4,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducers from './reducers';
+import rootReducer from './reducers';
 import { doLogin } from './actions';
 
 import 'antd/dist/antd.css';
 import './css/style.scss';
 
-const store = createStore(reducers);
+const store = createStore(rootReducer);
 
 console.log('Init Store', store.getState());
 

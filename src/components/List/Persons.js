@@ -1,34 +1,22 @@
 import React, { Component } from 'react';
 import PersonCell from './PersonCell';
+import { connect } from 'react-redux';
 
 class Persons extends Component {
     render() {
+        const cells = this.props.listPerson.map((value) => <li key={value.username}><PersonCell username={value.username} display_name={value.display_name} online={true}/></li>)
         return (
             <ul className='list'>
-                <li>
-                    <PersonCell online={true} />
-                </li>
-                <li>
-                    <PersonCell online={true} />
-                </li>
-                <li>
-                    <PersonCell online={true} />
-                </li>
-                <li>
-                    <PersonCell online={false} />
-                </li>
-                <li>
-                    <PersonCell online={false} />
-                </li>
-                <li>
-                    <PersonCell online={true} />
-                </li>
-                <li>
-                    <PersonCell online={true} />
-                </li>
+                {cells}
             </ul>
         );
     }
 }
 
-export default Persons;
+let mapStateToProps = (state) => {
+    return {
+        listPerson: state.listPerson
+    }
+}
+
+export default connect(mapStateToProps, null)(Persons);
