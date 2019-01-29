@@ -31,7 +31,8 @@ class Login extends Component {
                         that.props.doLogin({
                             username: res.data.user.username,
                             display_name: res.data.user.display_name,
-                        })
+                        });
+                        that.props.socket.emit('set-login', {username: res.data.user.username});
                         that.props.history.push('/');
                     }
                 });

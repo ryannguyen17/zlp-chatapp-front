@@ -32,10 +32,8 @@ class ChatArea extends Component {
                 content: this.state.message
             }
             
-            axios.post('http://127.0.0.1:8000/api/send-message', msg)
-                .then(function(res) {
-
-                });
+            axios.post('http://127.0.0.1:8000/api/send-message', msg);
+            this.props.socket.emit('personal-message', msg);
         }
 
         this.setState({

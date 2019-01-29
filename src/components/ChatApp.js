@@ -19,6 +19,7 @@ class ChatApp extends Component {
         localStorage.removeItem('username');
         localStorage.removeItem('display_name');
         this.props.doLogout();
+        this.props.socket.emit('set-logout', {username: this.props.currentUser.username});
         this.props.history.push('/login');
     }
 
@@ -71,7 +72,7 @@ class ChatApp extends Component {
                             <div className='app-main'>
                                 <ChatInfo />
                                 <ChatHistory />
-                                <ChatArea />
+                                <ChatArea socket={this.props.socket} />
                             </div>
                     }
                 <div className='clearfix'></div>

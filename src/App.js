@@ -10,8 +10,8 @@ class App extends Component {
     return (
         <Router>
             <div className="App">
-                <Route path='/' exact component={ChatApp} />
-                <Route path='/login' component={Login} />
+                <Route path='/' exact render={(props) => <ChatApp socket={this.props.socket}/>} />
+                <Route path='/login' render={(props) => <Login socket={this.props.socket} />} />
                 <Route path='/signup' component={Signup} />
             </div>
         </Router>
