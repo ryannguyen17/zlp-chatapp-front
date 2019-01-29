@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 class FriendMessage extends Component {
     render() {
         return (
-            <div className='msg friend-msg'>
+            <div>
                 <div className='msg-user'>
-                    me                
+                    {this.props.displayName}                
                 </div>
                 <div className='msg-content'>
-                    how are you?asdsadsadasdsada sd sad sad sa d sad sa sd asdsadasdasd as dsa d sad sa d sa d s as da sd as da s das d as d as da s d as d
+                    {this.props.content}
                 </div>
                 <div className='msg-time'>
-                    Tues, 2/5/2019
+                    {this.props.time_f}
                 </div>
             </div>
         );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Avatar, Icon } from 'antd';
 import { connect } from 'react-redux';
-import { setChatWith } from '../../actions';
+import { setChatWith, setChatHistory } from '../../actions';
+import axios from 'axios';
 
 class PersonCell extends Component {
     constructor(props) {
@@ -10,7 +11,15 @@ class PersonCell extends Component {
     }
 
     handleClick() {
-        this.props.setChatWith(this.props.username);
+        const that = this;
+        this.props.setChatWith(this.props.username, this.props.display_name);
+        axios.post('http://127.0.0.1:8000/api/get-messages', {
+            personal_message: true,
+            userA: this.props.currentUser.username,
+            userB: this.props.username
+        }).then(function(res) {
+            that.props.setChatHistory(res.data);
+        });
     }
 
     render() {
@@ -34,12 +43,21 @@ class PersonCell extends Component {
     }
 }
 
+let mapStateToProps = (state) => {
+    return {
+        currentUser: state.currentUser
+    }
+}
+
 let mapDispatchToProps = (dispatch) => {
     return {
-        setChatWith: (username) => {
-            dispatch(setChatWith(true, username));
+        setChatWith: (username, display_name) => {
+            dispatch(setChatWith(true, username, display_name));
+        },
+        setChatHistory: (arr) => {
+            dispatch(setChatHistory(arr));
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(PersonCell);
+export default connect(mapStateToProps, mapDispatchToProps)(PersonCell);

@@ -5,7 +5,8 @@ export default function chatWith(state = {}, action) {
         case SET_CHAT_WITH:
             return {
                 isPerson: action.content.isPerson,
-                id: action.content.id
+                id: action.content.id,
+                detail: action.content.detail
             }
         default:
             return state;
