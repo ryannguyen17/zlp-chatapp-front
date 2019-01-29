@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { Tabs, Avatar, Icon } from 'antd';
+import { Tabs, Icon, notification } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -26,6 +26,28 @@ class ChatApp extends Component {
     componentDidMount() {
         const that = this;
 
+        this.props.socket.on('personal-message', function(data) {
+            if(that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
+                if(data.receiver_u === that.props.currentUser.username) {
+                    notification['info']({
+                        message: 'Notification',
+                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
+                        duration: 1
+                    });
+                }
+            } else if (that.props.chatWith.isPerson === true) {
+                if(data.receiver_u === that.props.currentUser.username && data.sender_u !== that.props.chatWith.id) {
+                    notification['info']({
+                        message: 'Notification',
+                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
+                        duration: 1
+                    });
+                }
+            } else {
+
+            }
+        });
+
         axios.post('http://127.0.0.1:8000/api/get-list', {
             username: this.props.currentUser.username
         }).then(function(res) {
@@ -42,14 +64,9 @@ class ChatApp extends Component {
             <div className='chat-app'>
                 <div className='app-sider'>
                     <div className='sider-menu'>
-                        <span className='menu-item menu-item-user'>
-                            <Avatar size={64} icon="user" style={{backgroundColor: '#87d068'}}/>
-                        </span>
+                        <span className='show-username'>Nguyen Van Nghia</span>
                         <span className='menu-item'>
                             <Icon type="usergroup-add" style={{fontSize: '36px'}} />
-                        </span>
-                        <span className='menu-item'>
-                            <Icon type="info" style={{fontSize: '36px'}} />
                         </span>
                         <span className='menu-item logout'>
                             <Icon type="logout" style={{fontSize: '36px'}} onClick={this.handleLogOut} />

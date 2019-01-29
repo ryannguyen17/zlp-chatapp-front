@@ -12,6 +12,7 @@ class Signup extends Component {
     }
 
     handleSubmit = (e) => {
+        const that = this;
         e.preventDefault();
         this.props.form.validateFields((err, value) => {
             if(!err) {
@@ -26,6 +27,9 @@ class Signup extends Component {
                             message: 'Successs',
                             description: 'Đăng ký tài khoản thành công',
                             duration: 1
+                        });
+                        that.props.socket.emit('user-signup', {
+                            username: value.username, display_name: value.display_name
                         });
                     } else {
                         notification['error']({

@@ -81,7 +81,6 @@
             min-width: 96px;
             float: left;
             align-items: center;
-            padding: 10px 0;
             border-right: 1px solid rgba(128, 128, 128, 0.3);
             background-color: #4267b2;
 
@@ -101,6 +100,21 @@
             .menu-item:hover svg {
                 fill: white;
                 transition: fill 0.2s;
+            }
+
+            .show-username {
+                text-align: center;
+                margin-bottom: 12px;
+                color: rgb(180, 180, 180);
+                font-weight: bold;
+                padding: 12px 5px;
+                background-color: green;
+            }
+
+            .show-username:hover {
+                color: white;
+                transition: color 0.5s;
+                cursor: pointer;
             }
         }
 

@@ -12,13 +12,13 @@ class ChatHistory extends Component {
             if(value.sender_u === that.props.currentUser.username) {
                 return (
                     <div className='msg my-msg' key={value._id ? value._id : Math.floor((Math.random() * 1000) + 1)}>
-                        <MyMessage content={value.content} time_f={moment(value.time).format('D/M/YYYY, h:mm:ss a')} />
+                        <MyMessage content={value.content} time_f={moment(value.time).format('D/M/YYYY, h:mm a')} />
                     </div>
                 );
             } else {
                 return (
                     <div className='msg friend-msg' key={value._id ? value._id : Math.floor((Math.random() * 1000) + 1)}>
-                        <FriendMessage displayName={value.sender_d} content={value.content} time_f={moment(value.time).format('D/M/YYYY, h:mm:ss a')} />
+                        <FriendMessage displayName={value.sender_d} content={value.content} time_f={moment(value.time).format('D/M/YYYY, h:mm a')} />
                     </div>
                 );
             }

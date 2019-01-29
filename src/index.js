@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import { doLogin } from './actions';
+import { doLogin, addNewPerson, addToChatHistory } from './actions';
 import io from 'socket.io-client';
 
 import 'antd/dist/antd.css';
@@ -31,7 +31,13 @@ if(localStorage.getItem('username')) {
 }
 
 socket.on('personal-message', function(data) {
-    console.log(data);
+    if(data.sender_u === store.getState().chatWith.id || data.receiver_u === store.getState().chatWith.id) {
+        store.dispatch(addToChatHistory(data));
+    }
+});
+
+socket.on('user-signup', function(data) {
+    store.dispatch(addNewPerson(data));
 });
 
 ReactDOM.render(

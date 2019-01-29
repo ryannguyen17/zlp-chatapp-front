@@ -12,7 +12,7 @@ class App extends Component {
             <div className="App">
                 <Route path='/' exact render={(props) => <ChatApp socket={this.props.socket}/>} />
                 <Route path='/login' render={(props) => <Login socket={this.props.socket} />} />
-                <Route path='/signup' component={Signup} />
+                <Route path='/signup' render={(props) => <Signup socket={this.props.socket} />} />
             </div>
         </Router>
     );

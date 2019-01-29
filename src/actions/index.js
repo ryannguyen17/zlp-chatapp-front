@@ -3,6 +3,7 @@ export const SET_CHAT_WITH = 'SET_CHAT_WITH';
 export const SET_NEW_LIST_PERSON = 'SET_NEW_LIST_PERSON';
 export const ADD_NEW_PERSON = 'ADD_NEW_PERSON';
 export const SET_CHAT_HISTORY = 'SET_CHAT_HISTORY';
+export const ADD_CHAT = 'ADD_CHAT';
 
 export function doLogin({username, display_name}) {
     return {
@@ -34,7 +35,7 @@ export function setNewListPerson(arrPerson) {
 
 export function addNewPerson(person) {
     return {
-        type: SET_NEW_LIST_PERSON,
+        type: ADD_NEW_PERSON,
         content: person
     }
 }
@@ -43,5 +44,12 @@ export function setChatHistory(arr) {
     return {
         type: SET_CHAT_HISTORY,
         content: arr
+    }
+}
+
+export function addToChatHistory(msg) {
+    return {
+        type: ADD_CHAT,
+        content: msg
     }
 }
