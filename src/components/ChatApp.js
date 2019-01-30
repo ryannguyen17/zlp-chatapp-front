@@ -1,10 +1,10 @@
 import React , { Component } from 'react';
-import { Tabs, Icon, notification } from 'antd';
+import { Tabs, Icon, notification, Modal, Input, Checkbox } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import axios from 'axios';
-import { SET_NEW_LIST_PERSON } from '../actions';
+import { setNewListPerson, setNewListGroup } from '../actions';
 
 import Persons from './List/Persons';
 import Groups from './List/Groups';
@@ -13,14 +13,63 @@ import ChatHistory from './ChatHistory';
 import ChatArea from './ChatArea';
 
 const TabPane = Tabs.TabPane;
+const CheckboxGroup = Checkbox.Group;
 
 class ChatApp extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: false,
+            groupName: '',
+            groupMembers: []
+        }
+
+        this.handleGroupName = this.handleGroupName.bind(this);
+        this.handleCreateGroup = this.handleCreateGroup.bind(this);
+        this.handleGroupMembers = this.handleGroupMembers.bind(this);
+    }
+
     handleLogOut = () => {
         localStorage.removeItem('username');
         localStorage.removeItem('display_name');
         this.props.doLogout();
         this.props.socket.emit('set-logout', {username: this.props.currentUser.username});
         this.props.history.push('/login');
+    }
+
+    setModalVisible(logic) {
+        this.setState({
+            modalVisible: logic
+        });
+    }
+
+    handleGroupName(e) {
+        this.setState({
+            groupName: e.target.value
+        });
+    }
+
+    handleGroupMembers(checkedValues) {
+        this.setState({
+            groupMembers: checkedValues
+        });
+    }
+
+    handleCreateGroup() {
+        let group = {
+            id: Math.floor((Math.random() * 30000) + 1),
+            name: this.state.groupName,
+            members: this.state.groupMembers.concat(this.props.currentUser.username)
+        }
+
+        axios.post('http://127.0.0.1:8000/api/create-group', group);
+        this.props.socket.emit('create-group', group);
+
+        this.setState({
+            modalVisible: false,
+            groupName: '',
+            groupMembers: []
+        });
     }
 
     componentDidMount() {
@@ -48,10 +97,29 @@ class ChatApp extends Component {
             }
         });
 
+        this.props.socket.on('group-message', function(data) {
+            if(that.props.chatWith.isPerson === false) {
+                if(data.group_id !== that.props.chatWith.id) {
+                    notification['info']({
+                        message: 'Notification',
+                        description: `${data.sender_d} gửi tin nhắn đến nhóm ${data.group_name}`,
+                        duration: 1
+                    });
+                } 
+            } else {
+                notification['info']({
+                    message: 'Notification',
+                    description: `${data.sender_d} gửi tin nhắn đến nhóm ${data.group_name}`,
+                    duration: 1
+                });
+            }
+        });
+
         axios.post('http://127.0.0.1:8000/api/get-list', {
             username: this.props.currentUser.username
         }).then(function(res) {
             that.props.setNewListPerson(res.data.persons);
+            that.props.setNewListGroup(res.data.groups);
         });
     }
 
@@ -60,13 +128,30 @@ class ChatApp extends Component {
             return <Redirect to='/login' />
         }
 
+        const options = this.props.listPerson.map(function(value) {
+            return {
+                label: value.display_name,
+                value: value.username
+            }
+        });
+
         return (
             <div className='chat-app'>
+                <Modal
+                    title="Tạo nhóm"
+                    style={{ top: 20 }}
+                    visible={this.state.modalVisible}
+                    onOk={() => this.handleCreateGroup()}
+                    onCancel={() => this.setModalVisible(false)}
+                    >
+                    <Input style={{marginBottom: '16px'}} placeholder="Tên nhóm" onChange={this.handleGroupName} value={this.state.groupName} />
+                    <CheckboxGroup options={options} onChange={this.handleGroupMembers} value={this.state.groupMembers} />
+                </Modal>
                 <div className='app-sider'>
                     <div className='sider-menu'>
-                        <span className='show-username'>Nguyen Van Nghia</span>
+                        <span className='show-username'>{this.props.currentUser.display_name}</span>
                         <span className='menu-item'>
-                            <Icon type="usergroup-add" style={{fontSize: '36px'}} />
+                            <Icon type="usergroup-add" style={{fontSize: '36px'}} onClick={() => this.setModalVisible(true)} />
                         </span>
                         <span className='menu-item logout'>
                             <Icon type="logout" style={{fontSize: '36px'}} onClick={this.handleLogOut} />
@@ -101,7 +186,8 @@ class ChatApp extends Component {
 const mapStateToProps = (state) => {
     return {
         currentUser: state.currentUser,
-        chatWith: state.chatWith
+        chatWith: state.chatWith,
+        listPerson: state.listPerson
     }
 }
 
@@ -111,10 +197,10 @@ const mapDispatchToProps = (dispatch) => {
             dispatch({type: 'LOGOUT'});
         },
         setNewListPerson: (arr) => {
-            dispatch({
-                type: SET_NEW_LIST_PERSON,
-                content: arr
-            });
+            dispatch(setNewListPerson(arr));
+        },
+        setNewListGroup: (arr) => {
+            dispatch(setNewListGroup(arr));
         }
     }
 }

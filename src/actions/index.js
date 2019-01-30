@@ -2,6 +2,8 @@ export const LOGIN = 'LOGIN';
 export const SET_CHAT_WITH = 'SET_CHAT_WITH';
 export const SET_NEW_LIST_PERSON = 'SET_NEW_LIST_PERSON';
 export const ADD_NEW_PERSON = 'ADD_NEW_PERSON';
+export const SET_NEW_LIST_GROUP = 'SET_NEW_LIST_GROUP';
+export const ADD_NEW_GROUP = 'ADD_NEW_GROUP';
 export const SET_CHAT_HISTORY = 'SET_CHAT_HISTORY';
 export const ADD_CHAT = 'ADD_CHAT';
 
@@ -37,6 +39,20 @@ export function addNewPerson(person) {
     return {
         type: ADD_NEW_PERSON,
         content: person
+    }
+}
+
+export function setNewListGroup(arrGroup) {
+    return {
+        type: SET_NEW_LIST_GROUP,
+        content: arrGroup
+    }
+}
+
+export function addNewGroup(group) {
+    return {
+        type: ADD_NEW_GROUP,
+        content: group
     }
 }
 

@@ -22,7 +22,7 @@ class ChatArea extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        if(this.props.chatWith.isPerson) {
+        if(this.props.chatWith.isPerson === true) {
             let msg = {
                 sender_u: this.props.currentUser.username,
                 sender_d: this.props.currentUser.display_name,
@@ -34,6 +34,17 @@ class ChatArea extends Component {
             
             axios.post('http://127.0.0.1:8000/api/send-message', msg);
             this.props.socket.emit('personal-message', msg);
+        } else if (this.props.chatWith.isPerson === false) {
+            let msg = {
+                sender_u: this.props.currentUser.username,
+                sender_d: this.props.currentUser.display_name,
+                group_id: this.props.chatWith.id,
+                group_name: this.props.chatWith.detail.name,
+                isText: true,
+                content: this.state.message
+            }
+            axios.post('http://127.0.0.1:8000/api/send-group-message', msg);
+            this.props.socket.emit('group-message', msg);
         }
 
         this.setState({

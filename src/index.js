@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import { doLogin, addNewPerson, addToChatHistory } from './actions';
+import { doLogin, addNewPerson, addNewGroup, addToChatHistory } from './actions';
 import io from 'socket.io-client';
 
 import 'antd/dist/antd.css';
@@ -36,8 +36,18 @@ socket.on('personal-message', function(data) {
     }
 });
 
+socket.on('group-message', function(data) {
+    if(store.getState().chatWith.isPerson === false && store.getState().chatWith.id === data.group_id) {
+        store.dispatch(addToChatHistory(data));
+    }
+});
+
 socket.on('user-signup', function(data) {
     store.dispatch(addNewPerson(data));
+});
+
+socket.on('create-group', function(data) {
+    store.dispatch(addNewGroup(data));
 });
 
 ReactDOM.render(

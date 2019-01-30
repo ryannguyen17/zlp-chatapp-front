@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
 import GroupCell from './GroupCell';
+import { connect } from 'react-redux';
 
 class Groups extends Component {
     render() {
+        const cells = this.props.listGroup.map((value) => <li key={value.id}><GroupCell id={value.id} name={value.name} members={value.members}/></li>)
         return (
             <ul className='list'>
-                <li>
-                    <GroupCell />
-                </li>
-                <li>
-                    <GroupCell />
-                </li>
+                {cells}
             </ul>
         );
     }
 }
 
-export default Groups;
+let mapStateToProps = (state) => {
+    return {
+        listGroup: state.listGroup
+    }
+}
+
+export default connect(mapStateToProps, null)(Groups);

@@ -107,7 +107,7 @@
                 margin-bottom: 12px;
                 color: rgb(180, 180, 180);
                 font-weight: bold;
-                padding: 12px 5px;
+                padding: 12px 20px;
                 background-color: green;
             }
 
@@ -275,7 +275,7 @@
                 }
                 
                 form textarea {
-                    background-color: rgba(0, 0, 255, 0.2);
+                    background-color: rgba(0, 0, 255, 0.1);
                     display: block;
                     resize: none;
                     height: 100%;
@@ -284,7 +284,7 @@
                     font-size: 1.2em;
                     outline: none;
                     border: none;
-                    border-radius: 20px;
+                    border-radius: 10px;
                 }
 
                 form button {
@@ -296,10 +296,10 @@
                     padding-right: 20px;
                     outline: none;
                     border: none;
-                    border-radius: 0 20px 20px 0;
+                    border-radius: 0 10px 10px 0;
                     background-color: rgba(0, 0, 255, 0);
                     font-weight: bold;
-                    color: white;
+                    color: rgba(128, 128, 128, 0.4);
                 }
 
                 form button:hover {
@@ -313,11 +313,17 @@
             }
 
             .chat-upload {
-                visibility: hidden;
                 width: 64px;
                 height: 64px;
-                background-color: yellow;
-                border: 2px solid black;
+                background-image: url("../img/picture-icon.png");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .chat-upload:hover {
+                cursor: pointer;
+                box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.4);
             }
         }
     }
