@@ -105,14 +105,15 @@
             .show-username {
                 text-align: center;
                 margin-bottom: 12px;
-                color: rgb(180, 180, 180);
+                color: white;
                 font-weight: bold;
                 padding: 12px 20px;
                 background-color: green;
+                border-radius: 10px;
             }
 
             .show-username:hover {
-                color: white;
+                color: orange;
                 transition: color 0.5s;
                 cursor: pointer;
             }

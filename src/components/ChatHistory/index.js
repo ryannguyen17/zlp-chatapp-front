@@ -6,10 +6,19 @@ import MyMessage from './MyMessage';
 import FriendMessage from './FriendMessage';
 
 class ChatHistory extends Component {
+    constructor(props) {
+        super(props)
+        this.cView = React.createRef();
+    }
+
+    componentDidUpdate() {
+        this.cView.current.scrollTop = this.cView.current.scrollHeight;
+    }
+
     render() {
         const that = this;
-        let elements = this.props.chatHistory.map(function(value) {
-            if(value.sender_u === that.props.currentUser.username) {
+        let elements = this.props.chatHistory.map(function (value) {
+            if (value.sender_u === that.props.currentUser.username) {
                 return (
                     <div className='msg my-msg' key={value._id ? value._id : Math.floor((Math.random() * 1000) + 1)}>
                         <MyMessage content={value.content} time_f={moment(value.time).format('D/M/YYYY, h:mm a')} />
@@ -25,7 +34,7 @@ class ChatHistory extends Component {
         });
 
         return (
-            <div className='main-content'>
+            <div className='main-content' ref={this.cView}>
                 {elements}
             </div>
         );
