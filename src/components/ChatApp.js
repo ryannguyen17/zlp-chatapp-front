@@ -93,8 +93,14 @@ class ChatApp extends Component {
                         duration: 1
                     });
                 }
-            } else {
-
+            } else if(that.props.chatWith.isPerson === false) {
+                if (data.receiver_u === that.props.currentUser.username) {
+                    notification['info']({
+                        message: 'Notification',
+                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
+                        duration: 1
+                    });
+                }
             }
         });
 
