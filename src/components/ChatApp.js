@@ -105,19 +105,23 @@ class ChatApp extends Component {
         });
 
         this.props.socket.on('group-message', function (data) {
-            if (data.sender_u !== that.props.currentUser.username) {
-                if (that.props.chatWith.isPerson === false) {
-                    if (data.group_id !== that.props.chatWith.id) {
-                        notification['info']({
-                            message: 'Notification',
-                            description: `${data.sender_d} gửi tin nhắn đến nhóm ${data.group_name}`,
-                            duration: 1
-                        });
-                    }
-                } else {
+            if (that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
+                notification['info']({
+                    message: 'Notification',
+                    description: `${data.sender_d} gửi tin nhắn đến nhóm (1) ${data.group_name}`,
+                    duration: 1
+                });
+            } else if (that.props.chatWith.isPerson === true) {
+                notification['info']({
+                    message: 'Notification',
+                    description: `${data.sender_d} gửi tin nhắn đến nhóm (2) ${data.group_name}`,
+                    duration: 1
+                });
+            } else if (that.props.chatWith.isPerson === false) {
+                if (data.group_id !== that.props.chatWith.id) {
                     notification['info']({
                         message: 'Notification',
-                        description: `${data.sender_d} gửi tin nhắn đến nhóm ${data.group_name}`,
+                        description: `${data.sender_d} gửi tin nhắn đến nhóm (3) ${data.group_name}`,
                         duration: 1
                     });
                 }
