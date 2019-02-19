@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Avatar } from 'antd';
+import { Avatar, Icon } from 'antd';
 import { connect } from 'react-redux';
-import { setChatWith, setChatHistory } from '../../actions';
+import { setChatWith, setChatHistory, unnotiNewGroupMessage } from '../../actions';
 import axios from 'axios';
 
 class GroupCell extends Component {
@@ -13,6 +13,7 @@ class GroupCell extends Component {
     handleClick() {
         const that = this;
         this.props.setChatWith(this.props.id, {name: this.props.name, members: this.props.members});
+        this.props.unnotiNewGroupMessage(this.props.id);
         axios.post('http://127.0.0.1:8000/api/get-messages', {
             personal_message: false,
             group_id: this.props.id
@@ -27,6 +28,9 @@ class GroupCell extends Component {
                 <Avatar size={48} icon="team" />
                 <div className='info'>
                     <span className='display-name'>{this.props.name}</span>
+                </div>
+                <div className='status'>
+                        {this.props.noti ? <Icon type="message" theme="twoTone" twoToneColor="#52c41a" style={{fontSize: '1.2em'}} /> : null } 
                 </div>
             </div>
         );
@@ -46,6 +50,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setChatHistory: (arr) => {
             dispatch(setChatHistory(arr));
+        },
+        unnotiNewGroupMessage: (id) => {
+            dispatch(unnotiNewGroupMessage(id));
         }
     }
 }

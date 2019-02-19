@@ -109,7 +109,6 @@
                 font-weight: bold;
                 padding: 12px 20px;
                 background-color: green;
-                border-radius: 10px;
             }
 
             .show-username:hover {
@@ -240,7 +239,7 @@
 
                 .msg-content {
                     text-align: right;
-                    background-color: blue;
+                    background-color: rgba(0, 0, 255, 0.5);
                 }
             }
 
@@ -276,7 +275,7 @@
                 }
                 
                 form textarea {
-                    background-color: rgba(0, 0, 255, 0.1);
+                    background-color: rgba(212, 212, 212, 0.3);
                     display: block;
                     resize: none;
                     height: 100%;
@@ -305,7 +304,7 @@
 
                 form button:hover {
                     cursor: pointer;
-                    background-color: rgba(0, 0, 255, 0.1);
+                    background-color: rgba(212, 212, 212, 0.3);
                 }
 
                 form button:active {

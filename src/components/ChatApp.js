@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Tabs, Icon, notification, Modal, Input, Checkbox } from 'antd';
+import { Tabs, Icon, Modal, Input, Checkbox } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import axios from 'axios';
-import { setNewListPerson, setNewListGroup } from '../actions';
-
-
+import { setNewListPerson, setNewListGroup, notiNewMessage, notiNewGroupMessage } from '../actions';
 import Persons from './List/Persons';
 import Groups from './List/Groups';
 import ChatInfo from './ChatInfo';
@@ -76,57 +74,80 @@ class ChatApp extends Component {
     componentDidMount() {
         const that = this;
 
-        this.props.socket.on('personal-message', function (data) {
-            if (that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
-                if (data.receiver_u === that.props.currentUser.username) {
-                    notification['info']({
-                        message: 'Notification',
-                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
-                        duration: 1
-                    });
-                }
-            } else if (that.props.chatWith.isPerson === true) {
+        this.props.socket.on('personal-message', function(data) {
+            if (that.props.chatWith.isPerson === true) {
                 if (data.receiver_u === that.props.currentUser.username && data.sender_u !== that.props.chatWith.id) {
-                    notification['info']({
-                        message: 'Notification',
-                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
-                        duration: 1
-                    });
+                    that.props.notiNewMessage(data.sender_u);
                 }
-            } else if(that.props.chatWith.isPerson === false) {
+            } else {
                 if (data.receiver_u === that.props.currentUser.username) {
-                    notification['info']({
-                        message: 'Notification',
-                        description: `${data.sender_d} gửi tin nhắn cho bạn`,
-                        duration: 1
-                    });
+                    that.props.notiNewMessage(data.sender_u);
                 }
             }
         });
 
-        this.props.socket.on('group-message', function (data) {
-            if (that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
-                notification['info']({
-                    message: 'Notification',
-                    description: `${data.sender_d} gửi tin nhắn đến nhóm (1) ${data.group_name}`,
-                    duration: 1
-                });
-            } else if (that.props.chatWith.isPerson === true) {
-                notification['info']({
-                    message: 'Notification',
-                    description: `${data.sender_d} gửi tin nhắn đến nhóm (2) ${data.group_name}`,
-                    duration: 1
-                });
-            } else if (that.props.chatWith.isPerson === false) {
+        this.props.socket.on('group-message', function(data) {
+            if (that.props.chatWith.isPerson === false) {
                 if (data.group_id !== that.props.chatWith.id) {
-                    notification['info']({
-                        message: 'Notification',
-                        description: `${data.sender_d} gửi tin nhắn đến nhóm (3) ${data.group_name}`,
-                        duration: 1
-                    });
+                    that.props.notiNewGroupMessage(data.group_id);
                 }
+            } else if (that.props.chatWith.isPerson === true || that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
+                that.props.notiNewGroupMessage(data.group_id);
             }
         });
+
+        // this.props.socket.on('personal-message', function (data) {
+        //     if (that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
+        //         if (data.receiver_u === that.props.currentUser.username) {
+        //             notification['info']({
+        //                 message: 'Notification',
+        //                 description: `${data.sender_d} gửi tin nhắn cho bạn`,
+        //                 duration: 1
+        //             });
+        //         }
+        //     } else if (that.props.chatWith.isPerson === true) {
+        //         if (data.receiver_u === that.props.currentUser.username && data.sender_u !== that.props.chatWith.id) {
+        //             notification['info']({
+        //                 message: 'Notification',
+        //                 description: `${data.sender_d} gửi tin nhắn cho bạn`,
+        //                 duration: 1
+        //             });
+        //         }
+        //     } else if(that.props.chatWith.isPerson === false) {
+        //         if (data.receiver_u === that.props.currentUser.username) {
+        //             notification['info']({
+        //                 message: 'Notification',
+        //                 description: `${data.sender_d} gửi tin nhắn cho bạn`,
+        //                 duration: 1
+        //             });
+        //         }
+        //     }
+        // });
+
+        // this.props.socket.on('group-message', function (data) {
+        //     if (that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
+        //         console.log(that.props.chatWith);
+        //         notification['info']({
+        //             message: 'Notification',
+        //             description: `${data.sender_d} gửi tin nhắn đến nhóm (1) ${data.group_name}`,
+        //             duration: 1
+        //         });
+        //     } else if (that.props.chatWith.isPerson === true) {
+        //         notification['info']({
+        //             message: 'Notification',
+        //             description: `${data.sender_d} gửi tin nhắn đến nhóm (2) ${data.group_name}`,
+        //             duration: 1
+        //         });
+        //     } else if (that.props.chatWith.isPerson === false) {
+        //         if (data.group_id !== that.props.chatWith.id) {
+        //             notification['info']({
+        //                 message: 'Notification',
+        //                 description: `${data.sender_d} gửi tin nhắn đến nhóm (3) ${data.group_name}`,
+        //                 duration: 1
+        //             });
+        //         }
+        //     }
+        // });
 
         axios.post('http://127.0.0.1:8000/api/get-list', {
             username: this.props.currentUser.username
@@ -226,8 +247,14 @@ const mapDispatchToProps = (dispatch) => {
         setNewListPerson: (arr) => {
             dispatch(setNewListPerson(arr));
         },
+        notiNewMessage: (id) => {
+            dispatch(notiNewMessage(id))
+        },
         setNewListGroup: (arr) => {
             dispatch(setNewListGroup(arr));
+        },
+        notiNewGroupMessage: (id) => {
+            dispatch(notiNewGroupMessage(id));
         }
     }
 }

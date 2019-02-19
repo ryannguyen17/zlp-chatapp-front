@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 class Persons extends Component {
     render() {
-        const cells = this.props.listPerson.map((value) => <li key={value.username}><PersonCell username={value.username} display_name={value.display_name} online={true}/></li>)
+        const cells = this.props.listPerson.map((value) => <li key={value.username}><PersonCell username={value.username} display_name={value.display_name} noti={value.noti} /></li>)
         return (
             <ul className='list'>
                 {cells}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Avatar, Icon } from 'antd';
 import { connect } from 'react-redux';
-import { setChatWith, setChatHistory } from '../../actions';
+import { setChatWith, setChatHistory, unnotiNewMessage } from '../../actions';
 import axios from 'axios';
 
 class PersonCell extends Component {
@@ -13,6 +13,7 @@ class PersonCell extends Component {
     handleClick() {
         const that = this;
         this.props.setChatWith(this.props.username, this.props.display_name);
+        this.props.unnotiNewMessage(this.props.username);
         axios.post('http://127.0.0.1:8000/api/get-messages', {
             personal_message: true,
             userA: this.props.currentUser.username,
@@ -23,20 +24,15 @@ class PersonCell extends Component {
     }
 
     render() {
-        let cellStyle = this.props.online ? 'cell' : 'cell offline';
-
         return (
-            <div className={cellStyle} onClick={this.handleClick}>
+            <div className='cell' onClick={this.handleClick}>
                 <Avatar size={48} icon="user" />
                 <div className='info'>
                     <span className='display-name'>{this.props.display_name}</span>
                     <span className='lastest-msg'>{this.props.username}</span>
                 </div>
                 <div className='status'>
-                    {this.props.online ? 
-                        <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" style={{fontSize: '1.2em'}} /> : 
-                        <Icon type="minus-circle" theme="twoTone" twoToneColor="#887a88" style={{fontSize: '1.2em'}} />
-                    }
+                        {this.props.noti ? <Icon type="message" theme="twoTone" twoToneColor="#52c41a" style={{fontSize: '1.2em'}} /> : null } 
                 </div>
             </div>
         );
@@ -56,6 +52,9 @@ let mapDispatchToProps = (dispatch) => {
         },
         setChatHistory: (arr) => {
             dispatch(setChatHistory(arr));
+        },
+        unnotiNewMessage: (id) => {
+            dispatch(unnotiNewMessage(id));
         }
     }
 }
