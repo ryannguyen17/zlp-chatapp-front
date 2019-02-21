@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Icon, Modal, Input, Checkbox } from 'antd';
+import { Tabs, Icon, Modal, Input, Checkbox, notification } from 'antd';
 import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -100,6 +100,16 @@ class ChatApp extends Component {
                 }
             } else if (that.props.chatWith.isPerson === true || that.props.chatWith.isPerson === undefined || that.props.chatWith.isPerson === null) {
                 that.props.notiNewGroupMessage(data.group_id);
+            }
+        });
+
+        this.props.socket.on('user-signup', function(data) {
+            if(that.props.currentUser.username) {
+                notification['info']({
+                    message: 'Notification',
+                    description: `${data.display_name} đã tham gia NT Chat`,
+                    duration: 1.5
+                });
             }
         });
 
