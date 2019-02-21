@@ -58,6 +58,43 @@ class ChatArea extends Component {
         }
     }
 
+    handlePicture = (e) => {
+        const that = this;
+        let file = e.target.files[0];
+        let fr = new FileReader();
+        fr.onload = function(loadEvent) {
+            console.log(loadEvent.target.result);
+
+            if(that.props.chatWith.isPerson === true) {
+                let msg = {
+                    sender_u: that.props.currentUser.username,
+                    sender_d: that.props.currentUser.display_name,
+                    receiver_u: that.props.chatWith.id,
+                    receiver_d: that.props.chatWith.detail,
+                    isText: false,
+                    content: loadEvent.target.result
+                }
+                axios.post('http://127.0.0.1:8000/api/send-message', msg);
+                that.props.socket.emit('personal-message', msg);
+            } else if (that.props.chatWith.isPerson === false) {
+                let msg = {
+                    sender_u: that.props.currentUser.username,
+                    sender_d: that.props.currentUser.display_name,
+                    group_id: that.props.chatWith.id,
+                    group_name: that.props.chatWith.detail.name,
+                    isText: false,
+                    content: loadEvent.target.result
+                }
+                axios.post('http://127.0.0.1:8000/api/send-group-message', msg);
+                that.props.socket.emit('group-message', msg);
+            }
+        }
+
+        if(file !== undefined) {
+            fr.readAsDataURL(file);
+        }
+    }
+
     render() {
         return(
             <div className='main-bottom'>
@@ -68,9 +105,9 @@ class ChatArea extends Component {
                         <button type='submit'>Gửi</button>
                     </form>
                 </div>
-                <div className='chat-upload'>
-                    
-                </div>
+                <label className='chat-upload' htmlFor='upload-pic'>
+                </label>
+                <input type="file" name="photo" id="upload-pic" style={{opacity: '0', position: 'absolute', zIndex: '-1'}} onChange={this.handlePicture} />
             </div>
         );
     }

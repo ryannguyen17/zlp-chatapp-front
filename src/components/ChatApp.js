@@ -19,6 +19,7 @@ class ChatApp extends Component {
         super(props);
         this.state = {
             modalVisible: false,
+            modalVisible2: false,
             groupName: '',
             groupMembers: []
         }
@@ -39,6 +40,12 @@ class ChatApp extends Component {
     setModalVisible(logic) {
         this.setState({
             modalVisible: logic
+        });
+    }
+
+    setModalVisible2(logic) {
+        this.setState({
+            modalVisible2: logic
         });
     }
 
@@ -181,11 +188,28 @@ class ChatApp extends Component {
                     <Input style={{ marginBottom: '16px' }} placeholder="Tên nhóm" onChange={this.handleGroupName} value={this.state.groupName} />
                     <CheckboxGroup options={options} onChange={this.handleGroupMembers} value={this.state.groupMembers} />
                 </Modal>
+                <Modal
+                    title="Tác giả"
+                    style={{ top: 20 }}
+                    visible={this.state.modalVisible2}
+                    onOk={() => this.setModalVisible2(false)}
+                    onCancel={() => this.setModalVisible2(false)}
+                >
+                    <p>
+                        <b>Nguyễn Văn Nghĩa</b> <i>(nghianv2)</i>                  
+                    </p>
+                    <p>
+                        <b>Nguyễn Huỳnh Thoại</b> <i>(thoainh)</i>                    
+                    </p>
+                </Modal>
                 <div className='app-sider'>
                     <div className='sider-menu'>
                         <span className='show-username'>{this.props.currentUser.display_name}</span>
                         <span className='menu-item'>
                             <Icon type="usergroup-add" style={{ fontSize: '36px' }} onClick={() => this.setModalVisible(true)} />
+                        </span>
+                        <span className='menu-item'>
+                            <Icon type="info" style={{ fontSize: '36px' }} onClick={() => this.setModalVisible2(true)} />
                         </span>
                         <span className='menu-item logout'>
                             <Icon type="logout" style={{ fontSize: '36px' }} onClick={this.handleLogOut} />

@@ -245,6 +245,16 @@
                     text-align: right;
                     background-color: rgba(0, 0, 255, 0.5);
                 }
+
+                .msg-content-pic {
+                    text-align: right;
+                    
+                    img {
+                        border-radius: 15px;
+                        box-shadow:2px 2px 5px grey;
+                        max-width: 100%;
+                    }
+                }
             }
 
             .friend-msg {
@@ -263,6 +273,16 @@
                 .msg-content {
                     text-align: left;
                     background-color: green;
+                }
+
+                .msg-content-pic {
+                    text-align: left;
+                    
+                    img {
+                        border-radius: 15px;
+                        box-shadow:2px 2px 5px grey;
+                        max-width: 100%;
+                    }
                 }
             }
         }
