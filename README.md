@@ -8,7 +8,7 @@
 - [x] Chat nhóm
 - [x] Notification
 - [x] Lịch sử chat
-- [ ] Gửi hình ảnh
+- [x] Gửi hình ảnh
 
 ## Sử dụng
 
